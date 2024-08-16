@@ -1,0 +1,32 @@
+.loader-bg{position:fixed;top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,.6);display:flex;justify-content:center;align-items:center;z-index:9999}
+.loader{width:48px;height:48px;border-radius:50%;animation:rotate 1s linear infinite;display:inline-block;position:relative}
+.loader::before,.loader::after{content:"";box-sizing:border-box;position:absolute;inset:0;border-radius:50%;border:5px solid #3d78cb;animation:prixClipFix 2s linear infinite}
+.loader::after{border-color:#fe8a0f;animation:prixClipFix 2s linear infinite ,rotate .5s linear infinite reverse;inset:6px}
+@keyframes rotate {
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+@keyframes prixClipFix {
+0%{clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+25%{clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+50%{clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+75%{clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+100%{clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+}
+.profile-user-img-new{border:2px solid #adb5bd;margin:0 auto;padding:3px;object-fit:scale-down;border-radius:5px}
+.file-upload-box{border:2px dashed #ccc;padding:5px;text-align:center;cursor:pointer}
+.file-upload-box h2{font-size:20px;margin-bottom:10px}
+.file-input{display:none}
+.upload-label{cursor:pointer}
+.checkbox-list{display:flex;flex-wrap:wrap}
+.checkbox-label{margin-right:20px;display:flex;align-items:center;position:relative}
+.checkbox-label input{display:none}
+.checkmark{display:inline-block;width:20px;height:20px;border:2px solid #555;border-radius:4px;margin-right:5px;position:relative;cursor:pointer}
+.checkmark:after{content:"";position:absolute;display:none}
+.checkbox-label input:checked ~ .checkmark:after{display:block}
+.checkbox-label input:checked ~ .checkmark{background-color:#2196F3;border-color:#2196F3}
+.checkmark:after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.checkbox-label span{font-weight:400}
+.checkmark:hover{background-color:#ccc}
+#commonModal{padding:0!important}
+#view-documents-list{z-index:10000}
