@@ -72,7 +72,7 @@
                             <img src="{{ URL('assets/dist/img/logo-black-loadder.png')}}?{{ time() }}" class="img-circle elevation-2" alt="User Image" />
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">{{Session::get('loginData')['name']}}</a>
+                            <a href="javascript:void(0)" class="d-block">{{Session::get('loginData')['name']}}</a>
                         </div>
                     </div>
 
@@ -100,13 +100,22 @@
                             @else
 
                                 <li class="nav-item">
+                                    <a href="{{route('voucher-procurement.create')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Voucher Procurement'])) active @endif">
+                                        <i class="nav-icon fa fa-plus"></i>
+                                        <p>
+                                            Voucher Procurement
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <!-- <li class="nav-item">
                                     <a href="{{route('upload-csv.create')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Upload CSV'])) active @endif">
                                         <i class="nav-icon fa fa-upload"></i>
                                         <p>
                                             Upload CSV
                                         </p>
                                     </a>
-                                </li>
+                                </li> -->
 
                                 <li class="nav-item">
                                     <a href="{{route('productList.index')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Shop Now','Cart'])) active @endif">

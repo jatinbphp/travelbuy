@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProductlistController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\UploadCsvController;
+use App\Http\Controllers\Admin\VoucherProcurementController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,6 +57,11 @@ Route::middleware(['user','removePublic', 'admin'])->group(function () {
     ]);
 
     Route::resource('upload-csv', UploadCsvController::class)->except([
+        'index', 'edit', 'update', 'show', 'delete'
+    ]);
+
+    Route::post('voucher-procurement/new-div', [VoucherProcurementController::class, 'addNewdiv'])->name('voucher-procurement.new-div');
+    Route::resource('voucher-procurement', VoucherProcurementController::class)->except([
         'index', 'edit', 'update', 'show', 'delete'
     ]);
 
