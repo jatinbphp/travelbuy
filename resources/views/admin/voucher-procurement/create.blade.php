@@ -30,65 +30,37 @@
                                     @php
                                     $ii = 1;
                                     @endphp
-                                    @if(old('batchIdentifier'))
-                                        @foreach(old('batchIdentifier', []) as $index => $batchIdentifier)
+                                    @if(old('merchantId'))
+                                        @foreach(old('merchantId', []) as $index => $merchantIdData)
                                             <div class="row @if($ii!=1) main-div @endif" id="new_divs_{{$ii}}">      
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'merchantId', 'labelText' => 'Merchant ID', 'isRequired' => true])
 
-                                                <div class="col-md-4 mb-3">
-                                                    @include('admin.common.label', ['field' => 'batchIdentifier', 'labelText' => 'Batch Identifier', 'isRequired' => true])
+                                                    {!! Form::text('merchantId['.$index.']', Session::get('loginData')['name'], ['class' => 'form-control', 'placeholder' => 'Merchant ID', 'readonly' => true]) !!}
 
-                                                    {!! Form::text('batchIdentifier['.$index.']', null, ['class' => 'form-control text-sm p-1', 'placeholder' => 'Batch Identifier']) !!}
-
-                                                    @error("batchIdentifier.{$index}")
+                                                    @error("merchantId.{$index}")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-4 mb-3">
-                                                    @include('admin.common.label', ['field' => 'rrn', 'labelText' => 'RRN', 'isRequired' => true])
-
-                                                    {!! Form::text('rrn['.$index.']',null, ['class' => 'form-control', 'placeholder' => 'RRN']) !!}
-
-                                                    @error("rrn.{$index}")
-                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    @include('admin.common.label', ['field' => 'MerchantID', 'labelText' => 'Merchant ID', 'isRequired' => true])
-
-                                                    {!! Form::text('MerchantID['.$index.']', Session::get('loginData')['name'], ['class' => 'form-control', 'placeholder' => 'Merchant ID', 'readonly' => true]) !!}
-
-                                                    @error("MerchantID.{$index}")
-                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    @include('admin.common.label', ['field' => 'cardNumber', 'labelText' => 'Card Number', 'isRequired' => true])
-
-                                                    {!! Form::text('cardNumber['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Card Number']) !!}
-
-                                                    @error("cardNumber.{$index}")
-                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     @include('admin.common.label', ['field' => 'pluCode', 'labelText' => 'PLU Code', 'isRequired' => true])
 
-                                                    {!! Form::text('pluCode['.$index.']',null, ['class' => 'form-control', 'placeholder' => 'PLU Code']) !!}
+                                                    {!! Form::select('pluCode['.$index.']', ['2' => '2', 'hv' => 'hv', 'hvoucher' => 'hvoucher'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
 
                                                     @error("pluCode.{$index}")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     @include('admin.common.label', ['field' => 'quantity', 'labelText' => 'Quantity', 'isRequired' => true])
 
-                                                    {!! Form::text('quantity['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Quantity']) !!}
+                                                    {!! Form::selectRange('quantity['.$index.']', 1, 100, null, ['class' => 'form-control', 'placeholder' => 'Select Quantity']) !!}
 
                                                     @error("quantity.{$index}")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div> 
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     @include('admin.common.label', ['field' => 'voucherAmount', 'labelText' => 'Voucher Amount', 'isRequired' => true])
 
                                                     {!! Form::text('voucherAmount['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Voucher Amount']) !!}
@@ -97,16 +69,16 @@
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-                                                    {!! Form::text('notificationMethod['.$index.']',null, ['class' => 'form-control', 'placeholder' => 'Notification Method']) !!}
+                                                    {!! Form::select('notificationMethod[' .$index .']', ['Email' => 'Email', 'SMS' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
 
                                                     @error("notificationMethod.{$index}")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-9 mb-3">
                                                     @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Notification Address', 'isRequired' => true])
 
                                                     {!! Form::text('notificationAddress['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Notification Address']) !!}
@@ -115,16 +87,74 @@
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>  
-                                                <div class="col-md-10 mb-3">
+                                                <div class="col-md-12 mb-3">
                                                     @include('admin.common.label', ['field' => 'additionalData', 'labelText' => 'Additional Data', 'isRequired' => true])
+                                                    <hr class="m-0 p-0" style="border-top: 1px solid #ff7602;">
+                                                </div>  
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'patient_name', 'labelText' => 'Patient Name', 'isRequired' => true])
 
-                                                    {!! Form::textarea('additionalData['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Additional Data', 'rows' => 3]) !!}
+                                                    {!! Form::text('additionalData['.$index.'][patient_name]', null, ['class' => 'form-control', 'placeholder' => 'Patient Name']) !!}
 
-                                                    @error("additionalData.{$index}")
+                                                    @error("additionalData.{$index}.patient_name")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>  
-                                                <div class="action-button col-md-2" style="padding-top: 30px;">
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'patient_surname', 'labelText' => 'Patient Surname', 'isRequired' => true])
+
+                                                    {!! Form::text('additionalData['.$index.'][patient_surname]', null, ['class' => 'form-control', 'placeholder' => 'Patient Surname']) !!}
+
+                                                    @error("additionalData.{$index}.patient_surname")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'patient_id_number', 'labelText' => 'Patient Id Number', 'isRequired' => true])
+
+                                                    {!! Form::text('additionalData['.$index.'][patient_id_number]', null, ['class' => 'form-control', 'placeholder' => 'Patient Id Number']) !!}
+
+                                                    @error("additionalData.{$index}.patient_id_number")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'ICD10', 'labelText' => 'ICD10', 'isRequired' => true])
+
+                                                    {!! Form::text('additionalData['.$index.'][ICD10]', null, ['class' => 'form-control', 'placeholder' => 'ICD10']) !!}
+
+                                                    @error("additionalData.{$index}.ICD10")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'CPT4', 'labelText' => 'CPT4', 'isRequired' => true])
+
+                                                    {!! Form::text('additionalData['.$index.'][CPT4]', null, ['class' => 'form-control', 'placeholder' => 'CPT4']) !!}
+
+                                                    @error("additionalData.{$index}.CPT4")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    @include('admin.common.label', ['field' => 'molecule', 'labelText' => 'Molecule', 'isRequired' => true])
+
+                                                    {!! Form::text('additionalData['.$index.'][molecule]', null, ['class' => 'form-control', 'placeholder' => 'Molecule']) !!}
+
+                                                    @error("additionalData.{$index}.molecule")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    @include('admin.common.label', ['field' => 'nappi_code', 'labelText' => 'Nappi Code', 'isRequired' => true])
+
+                                                    {!! Form::text('additionalData['.$index.'][nappi_code]', null, ['class' => 'form-control', 'placeholder' => 'Nappi Code']) !!}
+
+                                                    @error("additionalData.{$index}.nappi_code")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="action-button col-md-2  mb-1">
                                                     <div>
                                                         {!! Form::button('<i class="fa fa-trash"></i>', [
                                                             'type' => 'button',
@@ -145,59 +175,78 @@
                                             @php $ii++; @endphp
                                         @endforeach
                                     @else 
-
                                         <div class="row" id="new_divs_1">
-                                            <div class="col-md-4 mb-3">
-                                                @include('admin.common.label', ['field' => 'batchIdentifier', 'labelText' => 'Batch Identifier', 'isRequired' => true])
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'merchantId', 'labelText' => 'Merchant ID', 'isRequired' => true])
 
-                                                {!! Form::text('batchIdentifier[0]', null, ['class' => 'form-control text-sm p-1', 'placeholder' => 'Batch Identifier']) !!}
+                                                {!! Form::text('merchantId[0]', Session::get('loginData')['name'], ['class' => 'form-control', 'placeholder' => 'Merchant ID', 'readonly' => true]) !!}
                                             </div>
-                                            <div class="col-md-4 mb-3">
-                                                @include('admin.common.label', ['field' => 'rrn', 'labelText' => 'RRN', 'isRequired' => true])
-
-                                                {!! Form::text('rrn[0]',null, ['class' => 'form-control', 'placeholder' => 'RRN']) !!}
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                @include('admin.common.label', ['field' => 'MerchantID', 'labelText' => 'Merchant ID', 'isRequired' => true])
-
-                                                {!! Form::text('MerchantID[0]', Session::get('loginData')['name'], ['class' => 'form-control', 'placeholder' => 'Merchant ID', 'readonly' => true]) !!}
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                @include('admin.common.label', ['field' => 'cardNumber', 'labelText' => 'Card Number', 'isRequired' => true])
-
-                                                {!! Form::text('cardNumber[0]', null, ['class' => 'form-control', 'placeholder' => 'Card Number']) !!}
-                                            </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 @include('admin.common.label', ['field' => 'pluCode', 'labelText' => 'PLU Code', 'isRequired' => true])
 
-                                                {!! Form::text('pluCode[0]',null, ['class' => 'form-control', 'placeholder' => 'PLU Code']) !!}
+                                                {!! Form::select('pluCode[0]', ['2' => '2', 'hv' => 'hv', 'hvoucher' => 'hvoucher'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 @include('admin.common.label', ['field' => 'quantity', 'labelText' => 'Quantity', 'isRequired' => true])
 
-                                                {!! Form::text('quantity[0]', null, ['class' => 'form-control', 'placeholder' => 'Quantity']) !!}
+                                                {!! Form::selectRange('quantity[0]', 1, 100, null, ['class' => 'form-control', 'placeholder' => 'Select Quantity']) !!}
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 @include('admin.common.label', ['field' => 'voucherAmount', 'labelText' => 'Voucher Amount', 'isRequired' => true])
 
                                                 {!! Form::text('voucherAmount[0]', null, ['class' => 'form-control', 'placeholder' => 'Voucher Amount']) !!}
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-                                                {!! Form::text('notificationMethod[0]',null, ['class' => 'form-control', 'placeholder' => 'Notification Method']) !!}
+                                                {!! Form::select('notificationMethod[0]', ['Email' => 'Email', 'SMS' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-9 mb-3">
                                                 @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Notification Address', 'isRequired' => true])
 
                                                 {!! Form::text('notificationAddress[0]', null, ['class' => 'form-control', 'placeholder' => 'Notification Address']) !!}
                                             </div>  
-                                            <div class="col-md-10 mb-3">
+                                            <div class="col-md-12 mb-3">
                                                 @include('admin.common.label', ['field' => 'additionalData', 'labelText' => 'Additional Data', 'isRequired' => true])
-
-                                                {!! Form::textarea('additionalData[0]', null, ['class' => 'form-control', 'placeholder' => 'Additional Data', 'rows' => 3]) !!}
+                                                <hr class="m-0 p-0" style="border-top: 1px solid #ff7602;">
                                             </div>  
-                                            <div class="action-button col-md-2" style="padding-top: 30px;">
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'patient_name', 'labelText' => 'Patient Name', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][patient_name]', null, ['class' => 'form-control', 'placeholder' => 'Patient Name']) !!}
+                                            </div>  
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'patient_surname', 'labelText' => 'Patient Surname', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][patient_surname]', null, ['class' => 'form-control', 'placeholder' => 'Patient Surname']) !!}
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'patient_id_number', 'labelText' => 'Patient Id Number', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][patient_id_number]', null, ['class' => 'form-control', 'placeholder' => 'Patient Id Number']) !!}
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'ICD10', 'labelText' => 'ICD10', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][ICD10]', null, ['class' => 'form-control', 'placeholder' => 'ICD10']) !!}
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'CPT4', 'labelText' => 'CPT4', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][CPT4]', null, ['class' => 'form-control', 'placeholder' => 'CPT4']) !!}
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                @include('admin.common.label', ['field' => 'molecule', 'labelText' => 'Molecule', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][molecule]', null, ['class' => 'form-control', 'placeholder' => 'Molecule']) !!}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                @include('admin.common.label', ['field' => 'nappi_code', 'labelText' => 'Nappi Code', 'isRequired' => true])
+
+                                                {!! Form::text('additionalData[0][nappi_code]', null, ['class' => 'form-control', 'placeholder' => 'Nappi Code']) !!}
+                                            </div>
+
+                                            <div class="action-button col-md-2 mb-1">
                                                 {!! Form::button('<i class="fa fa-trash"></i>', [
                                                     'type' => 'button',
                                                     'class' => 'btn btn-danger',
