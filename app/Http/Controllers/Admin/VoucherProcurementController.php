@@ -7,17 +7,21 @@ use Illuminate\Http\Request;
 use App\Models\VoucherProcurement;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\Models\Products;
+use App\Rules\CommaSeparatedEmails;
 
 class VoucherProcurementController extends Controller
 {
     public function create(){
         $data['menu'] = "Voucher Procurement";
+        $data['productData'] = Products::select('name', 'nappy_code')->where('status','active')->first();
         return view('admin.voucher-procurement.create',$data);
     }
 
     public function addNewdiv(Request $request){   
         if ($request->ajax()) {
             $data = $request->all();
+            $data['productData'] = Products::select('name', 'nappy_code')->where('status','active')->first();
             return view('admin.voucher-procurement.new-div', $data);
         }
     }
@@ -30,31 +34,34 @@ class VoucherProcurementController extends Controller
             'quantity.*' => 'required',
             'voucherAmount.*' => 'required',
             'notificationMethod.*' => 'required',
-            'notificationAddress.*' => 'required',
+            'notificationAddress.*' => ['required', new CommaSeparatedEmails],
             'additionalData.*.patient_name' => 'required|max:255',
             'additionalData.*.patient_surname' => 'required|max:255',
-            'additionalData.*.patient_id_number' => 'required',
+            'additionalData.*.patient_id_number' => 'required|numeric|digits:13',
             'additionalData.*.ICD10' => 'required',
             'additionalData.*.CPT4' => 'required',
             'additionalData.*.molecule' => 'required',
             'additionalData.*.nappi_code' => 'required',
+            'additionalData.*.patient_delivery_address' => 'required',
         ], [
             'merchantID.*.required' => 'Merchant ID is required.',
             'pluCode.*.required' => 'PLU Code is required.',
             'quantity.*.required' => 'Quantity is required.',
             'voucherAmount.*.required' => 'Voucher Amount is required.',
             'notificationMethod.*.required' => 'Notification Method is required.',
-            'notificationAddress.*.required' => 'Notification Address is required.',
+            'notificationAddress.*.required' => 'Email Address is required.',
             'additionalData.*.patient_name.required' => 'The patient name is required.',
             'additionalData.*.patient_name.max' => 'The patient name may not be greater than 255 characters.',
             'additionalData.*.patient_surname.required' => 'The patient surname is required.',
             'additionalData.*.patient_surname.max' => 'The patient surname may not be greater than 255 characters.',
-            'additionalData.*.patient_id_number.required' => 'The patient ID number is required.',
-            'additionalData.*.patient_id_number.max' => 'The patient ID number may not be greater than 20 characters.',
+            'additionalData.*.patient_id_number.required' => 'The patient ID is required.',
+            'additionalData.*.patient_id_number.numeric' => 'The patient ID must be a valid number.',
+            'additionalData.*.patient_id_number.digits' => 'The patient ID must be exactly 13 digits.',
             'additionalData.*.ICD10.required' => 'The ICD10 code is required.',
             'additionalData.*.CPT4.required' => 'The CPT4 code is required.',
             'additionalData.*.molecule.required' => 'The molecule name is required.',            
-            'additionalData.*.nappi_code.required' => 'The Nappi code is required.',
+            'additionalData.*.nappi_code.required' => 'The nappi code is required.',
+            'additionalData.*.patient_delivery_address.required' => 'The patient delivery address is required.',
         ]);
 
 

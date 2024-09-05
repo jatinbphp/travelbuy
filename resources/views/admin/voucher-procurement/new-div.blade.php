@@ -4,11 +4,7 @@
 
         {!! Form::text('merchantId[' . $childDiv . ']', Session::get('loginData')['name'], ['class' => 'form-control', 'placeholder' => 'Merchant ID', 'readonly' => true]) !!}
     </div>
-    <div class="col-md-3 mb-3">
-        @include('admin.common.label', ['field' => 'pluCode', 'labelText' => 'PLU Code', 'isRequired' => true])
-
-        {!! Form::select('pluCode[' .$childDiv .']', ['2' => '2', 'hv' => 'hv', 'hvoucher' => 'hvoucher'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
-    </div>
+    {!! Form::hidden('pluCode[' . $childDiv . ']', '2/hv/hvoucher', ['class' => 'form-control']) !!}
     <div class="col-md-3 mb-3">
         @include('admin.common.label', ['field' => 'quantity', 'labelText' => 'Quantity', 'isRequired' => true])
 
@@ -22,12 +18,12 @@
     <div class="col-md-3 mb-3">
         @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-        {!! Form::select('notificationMethod[' .$childDiv .']', ['Email' => 'Email', 'SMS' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
+        {!! Form::text('notificationMethod[' .$childDiv .']', 'Email', ['class' => 'form-control', 'readonly' => true]) !!}
     </div>
-    <div class="col-md-9 mb-3">
-        @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Notification Address', 'isRequired' => true])
+    <div class="col-md-12 mb-3">
+        @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Email Address', 'isRequired' => true])
 
-        {!! Form::text('notificationAddress[' . $childDiv . ']', null, ['class' => 'form-control', 'placeholder' => 'Notification Address']) !!}
+        {!! Form::text('notificationAddress[' . $childDiv . ']', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) !!}
     </div>  
 
     <div class="col-md-12 mb-3">
@@ -45,29 +41,34 @@
         {!! Form::text('additionalData['.$childDiv.'][patient_surname]', null, ['class' => 'form-control', 'placeholder' => 'Patient Surname']) !!}
     </div>
     <div class="col-md-3 mb-3">
-        @include('admin.common.label', ['field' => 'patient_id_number', 'labelText' => 'Patient Id Number', 'isRequired' => true])
+        @include('admin.common.label', ['field' => 'patient_id_number', 'labelText' => 'Patient ID', 'isRequired' => true])
 
-        {!! Form::text('additionalData['.$childDiv.'][patient_id_number]', null, ['class' => 'form-control', 'placeholder' => 'Patient Id Number']) !!}
+        {!! Form::text('additionalData['.$childDiv.'][patient_id_number]', null, ['class' => 'form-control', 'placeholder' => 'Patient ID']) !!}
     </div>
     <div class="col-md-3 mb-3">
-        @include('admin.common.label', ['field' => 'ICD10', 'labelText' => 'ICD10', 'isRequired' => true])
+        @include('admin.common.label', ['field' => 'ICD10', 'labelText' => 'ICD10 (Medical Classification)', 'isRequired' => true])
 
-        {!! Form::text('additionalData['.$childDiv.'][ICD10]', null, ['class' => 'form-control', 'placeholder' => 'ICD10']) !!}
+        {!! Form::text('additionalData['.$childDiv.'][ICD10]', null, ['class' => 'form-control', 'placeholder' => 'ICD10 (Medical Classification)']) !!}
     </div>
-    <div class="col-md-3 mb-3">
-        @include('admin.common.label', ['field' => 'CPT4', 'labelText' => 'CPT4', 'isRequired' => true])
+    <div class="col-md-6 mb-3">
+        @include('admin.common.label', ['field' => 'CPT4', 'labelText' => 'CPT4 (Medical Service/Procedures)', 'isRequired' => true])
 
-        {!! Form::text('additionalData['.$childDiv.'][CPT4]', null, ['class' => 'form-control', 'placeholder' => 'CPT4']) !!}
+        {!! Form::text('additionalData['.$childDiv.'][CPT4]', null, ['class' => 'form-control', 'placeholder' => 'CPT4 (Medical Service/Procedures)']) !!}
     </div>
     <div class="col-md-3 mb-3">
         @include('admin.common.label', ['field' => 'molecule', 'labelText' => 'Molecule', 'isRequired' => true])
 
-        {!! Form::text('additionalData['.$childDiv.'][molecule]', null, ['class' => 'form-control', 'placeholder' => 'Molecule']) !!}
+        {!! Form::text('additionalData['.$childDiv.'][molecule]', $productData['name'], ['class' => 'form-control', 'readonly' => true]) !!}
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-3 mb-3">
         @include('admin.common.label', ['field' => 'nappi_code', 'labelText' => 'Nappi Code', 'isRequired' => true])
 
-        {!! Form::text('additionalData['.$childDiv.'][nappi_code]', null, ['class' => 'form-control', 'placeholder' => 'Nappi Code']) !!}
+        {!! Form::text('additionalData['.$childDiv.'][nappi_code]', $productData['nappy_code'], ['class' => 'form-control', 'readonly' => true]) !!}
+    </div> 
+    <div class="col-md-12 mb-3">
+        @include('admin.common.label', ['field' => 'patient_delivery_address', 'labelText' => 'Patient Delivery Address', 'isRequired' => true])
+
+        {!! Form::text('additionalData['.$childDiv.'][patient_delivery_address]', null, ['class' => 'form-control', 'placeholder' => 'Patient Delivery Address']) !!}
     </div> 
     <div class="action-button col-md-2 mb-1">
         <button type="button" class="btn btn-danger mr-1" onClick="removeChildRow({{$childDiv}}, 1)"><i class="fa fa-trash"></i></button>
