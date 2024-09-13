@@ -64,12 +64,16 @@
                                                 <div class="col-md-3 mb-3">
                                                     @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-                                                    {!! Form::text('notificationMethod[' .$index .']', 'Email', ['class' => 'form-control', 'readonly' => true]) !!}
+                                                    {!! Form::select('notificationMethod[' .$index .']', ['01' => 'Email', '02' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
+
+                                                    @error("notificationMethod.{$index}")
+                                                        <span class="text-danger"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-md-12 mb-3">
-                                                    @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Email Address', 'isRequired' => true])
+                                                    @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Email Address / Phone Number', 'isRequired' => true])
 
-                                                    {!! Form::text('notificationAddress['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) !!}
+                                                    {!! Form::text('notificationAddress['.$index.']', null, ['class' => 'form-control', 'placeholder' => 'Email Address / Phone Number']) !!}
 
                                                     @error("notificationAddress.{$index}")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
@@ -184,12 +188,12 @@
                                             <div class="col-md-3 mb-3">
                                                 @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-                                                {!! Form::text('notificationMethod[0]', 'Email', ['class' => 'form-control', 'readonly' => true]) !!}
+                                                {!! Form::select('notificationMethod[0]', ['01' => 'Email', '02' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
                                             </div>
                                             <div class="col-md-12 mb-3">
-                                                @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Email Address', 'isRequired' => true])
+                                                @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Email Address / Phone Number', 'isRequired' => true])
 
-                                                {!! Form::text('notificationAddress[0]', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) !!}
+                                                {!! Form::text('notificationAddress[0]', null, ['class' => 'form-control', 'placeholder' => 'Email Address / Phone Number']) !!}
                                             </div>  
                                             <div class="col-md-12 mb-3">
                                                 @include('admin.common.label', ['field' => 'additionalData', 'labelText' => 'Additional Data', 'isRequired' => true])

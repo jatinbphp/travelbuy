@@ -1,3 +1,0 @@
-"Batch Identifier",RRN,"Merchant ID","PLU Code",Quantity,"Voucher Amount","Notification Method","Notification Address","Additional Data"
-BATCH-CTCQ3,XRIFMGJHQFYI,TBUY64665380465,2,3,100,Email,Test@gmail.com,"Patient Name: Test; Patient Surname: Testttt; Patient Id Number: 3232323; ICD10: 1597536428; CPT4: 14543232; Molecule: tttttt; Nappi Code: NAPPI123; Patient Delivery Address: South Africa"
-BATCH-GNJQU,MGRK2GXJBGDU,TBUY64665380465,hv,3,200,SMS,testt@gmail.com,"Patient Name: Test; Patient Surname: Testing; Patient Id Number: 1574823; ICD10: 316565; CPT4: 1256478; Molecule: 23153; Nappi Code: N12233; Patient Delivery Address: South Africa"
