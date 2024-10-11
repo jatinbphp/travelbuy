@@ -48,6 +48,7 @@ class VoucherProcurementController extends Controller
                     }
                 }
             ],
+            'additionalData.*.dosage' => 'required',
             'additionalData.*.patient_name' => 'required|max:255',
             'additionalData.*.patient_surname' => 'required|max:255',
             'additionalData.*.patient_id_number' => 'required|numeric|digits:13',
@@ -55,7 +56,16 @@ class VoucherProcurementController extends Controller
             'additionalData.*.CPT4' => 'required',
             'additionalData.*.molecule' => 'required',
             'additionalData.*.nappi_code' => 'required',
-            'additionalData.*.patient_delivery_address' => 'required',
+            'additionalData.*.patient_medical_scheme_name' => 'required',
+            'additionalData.*.patient_medical_scheme' => 'required',
+            'additionalData.*.pharmacy_name' => 'required',
+            'additionalData.*.address_1' => 'required',
+            'additionalData.*.address_2' => 'required',
+            'additionalData.*.suburb' => 'required',
+            'additionalData.*.city' => 'required',
+            'additionalData.*.region' => 'required',
+            'additionalData.*.country_code' => 'required',
+            'additionalData.*.postal_code' => 'required',
         ], [
             'merchantID.*.required' => 'Merchant ID is required.',
             'pluCode.*.required' => 'PLU Code is required.',
@@ -63,6 +73,7 @@ class VoucherProcurementController extends Controller
             'voucherAmount.*.required' => 'Voucher Amount is required.',
             'notificationMethod.*.required' => 'Notification Method is required.',
             'notificationAddress.*.required' => 'Email Address / Phone Number is required.',
+            'additionalData.*.dosage.required' => 'The dosage is required.',
             'additionalData.*.patient_name.required' => 'The patient name is required.',
             'additionalData.*.patient_name.max' => 'The patient name may not be greater than 255 characters.',
             'additionalData.*.patient_surname.required' => 'The patient surname is required.',
@@ -74,7 +85,16 @@ class VoucherProcurementController extends Controller
             'additionalData.*.CPT4.required' => 'The CPT4 code is required.',
             'additionalData.*.molecule.required' => 'The molecule name is required.',            
             'additionalData.*.nappi_code.required' => 'The nappi code is required.',
-            'additionalData.*.patient_delivery_address.required' => 'The patient delivery address is required.',
+            'additionalData.*.patient_medical_scheme_name.required' => 'The patient medical scheme name is required.',
+            'additionalData.*.patient_medical_scheme.required' => 'The patient medical scheme membership number is required.',
+            'additionalData.*.pharmacy_name.required' => 'The pharmacy name (service point) is required.',
+            'additionalData.*.address_1.required' => 'The address 1 is required.',
+            'additionalData.*.address_2.required' => 'The address 2 is required.',
+            'additionalData.*.suburb.required' => 'The suburb is required.',
+            'additionalData.*.city.required' => 'The city is required.',
+            'additionalData.*.region.required' => 'The region is required.',
+            'additionalData.*.country_code.required' => 'The country code is required.',
+            'additionalData.*.postal_code.required' => 'The postal code is required.',
         ]);
 
 
@@ -111,7 +131,7 @@ class VoucherProcurementController extends Controller
                 $voucherAmounts[$index] ?? '',
                 $notificationMethods[$index] ?? '',
                 $notificationAddresses[$index] ?? '',
-                'ONCOL;'
+                'MEDICAL;'
             ];
 
             $patientData = [
@@ -120,51 +140,41 @@ class VoucherProcurementController extends Controller
                 $additionalData[$index]['patient_id_number'] ?? '',
             ];
 
+            $patientMedicalSchemeName = [
+                $additionalData[$index]['patient_medical_scheme_name'] ?? '',
+                $additionalData[$index]['patient_medical_scheme'] ?? '',
+            ];
+
+            $deliveryAddress = [
+                $additionalData[$index]['address_1'] ?? '',
+                $additionalData[$index]['address_2'] ?? '',
+                $additionalData[$index]['suburb'] ?? '',
+                $additionalData[$index]['city'] ?? '',
+                $additionalData[$index]['region'] ?? '',
+                $additionalData[$index]['country_code'] ?? '',
+                $additionalData[$index]['postal_code'] ?? '',
+            ];
+
             $oncolData = [
                 implode(",", $patientData),
+                implode(",", $patientMedicalSchemeName),
                 $additionalData[$index]['ICD10'] ?? '',
                 $additionalData[$index]['CPT4'] ?? '',
                 str_replace(" ", "", $additionalData[$index]['molecule']) ?? '',
-                $additionalData[$index]['nappi_code'] ?? '',
+                ($additionalData[$index]['nappi_code'] ?? '') . '|' . ($additionalData[$index]['dosage'] ?? ''),
+                $additionalData[$index]['address_1'] ?? '',
+                $additionalData[$index]['address_2'] ?? '',
+                $additionalData[$index]['suburb'] ?? '',
+                $additionalData[$index]['city'] ?? '',
+                $additionalData[$index]['region'] ?? '',
+                $additionalData[$index]['country_code'] ?? '',
+                $additionalData[$index]['postal_code'] ?? '',
+                $additionalData[$index]['pharmacy_name'] ?? '',
             ];
             
             $csvLine = implode("|", $voucherData).''.implode(";", $oncolData)."\r\n";
             fwrite($csvFile, $csvLine);
         }
-
-        /*foreach ($merchantIDs as $index => $merchantID) {
-
-            $voucherData = [
-                'B'.str_pad(mt_rand(0, 99999), 5, '0', STR_PAD_LEFT),
-                str_pad(mt_rand(0, 999999999999), 12, '0', STR_PAD_LEFT),
-                $merchantID,
-                '',
-                $pluCodes[$index] ?? '',
-                $quantities[$index] ?? '',
-                $voucherAmounts[$index] ?? '',
-                $notificationMethods[$index] ?? '',
-                $notificationAddresses[$index] ?? '',
-                'ONCOL;'
-            ];
-
-            $patientData = [
-                $additionalData[$index]['patient_name'] ?? '',
-                $additionalData[$index]['patient_surname'] ?? '',
-                $additionalData[$index]['patient_id_number'] ?? '',
-            ];
-
-            $oncolData = [
-                implode(",", $patientData),
-                $additionalData[$index]['ICD10'] ?? '',
-                $additionalData[$index]['CPT4'] ?? '',
-                str_replace(" ", "", $additionalData[$index]['molecule']) ?? '',
-                $additionalData[$index]['nappi_code'] ?? '',
-            ];
-            
-            fputcsv($csvFile, [
-                implode("|", $voucherData).''.implode(";", $oncolData),
-            ]);
-        }*/
 
         fclose($csvFile);
         VoucherProcurement::create($input);
