@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Session;
 class TerminalTransactionsReportController extends Controller
 {
     public function index(Request $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['admin', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+        
         $data['menu'] = 'Terminals Transactions Report';
 
         // Check if the request is AJAX

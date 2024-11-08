@@ -2,7 +2,7 @@
     <div class="col-md-3 mb-3">
         @include('admin.common.label', ['field' => 'merchantId', 'labelText' => 'Merchant ID', 'isRequired' => true])
 
-        {!! Form::text('merchantId[' . $childDiv . ']', Session::get('loginData')['name'], ['class' => 'form-control', 'placeholder' => 'Merchant ID', 'readonly' => true]) !!}
+        {!! Form::text('merchantId[' . $childDiv . ']', null, ['class' => 'form-control', 'placeholder' => 'Merchant ID']) !!}
     </div>
     {!! Form::hidden('pluCode[' . $childDiv . ']', '2/hv/hvoucher', ['class' => 'form-control']) !!}
     <div class="col-md-3 mb-3">

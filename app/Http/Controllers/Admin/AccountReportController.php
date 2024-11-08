@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Session;
 class AccountReportController extends Controller
 {
     public function index(Request $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['admin', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+        
         $data['menu'] = 'Account Report';
 
         // Check if the request is AJAX
@@ -26,12 +33,18 @@ class AccountReportController extends Controller
                 // Make curl request to fetch data
                 $postResponse = $this->curlRequest(env('MERCHANT_ACCOUNTS_URL'), 'POST', $dataToSend);
 
-                if (!empty($postResponse)) {
+                $retrieveResponse = json_decode($postResponse);
+                if ($retrieveResponse->responseCode != 0 || empty($retrieveResponse->data)) {
+                } else {
+                    $items = $retrieveResponse;
+                }
+
+                /*if (!empty($postResponse)) {
                     $items = json_decode($postResponse);
                 } else {
                     // Handle case where curl request failed
                     return response()->json(['error' => 'Failed to fetch data.'], 500);
-                }
+                }*/
             } else {
                 // Handle case where userId is not set in session
                 return response()->json(['error' => 'User session data not found.'], 403);

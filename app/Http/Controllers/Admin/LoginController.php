@@ -33,12 +33,22 @@ class LoginController extends Controller
                 \Session::flash('danger', 'Username or Password are incorrect. Please try again!');
                 return redirect()->back();
             } else {
-                $loginData = [
-                    'name' => $user->name,
-                    'MerchantID' => $request->input('username'),
-                    'userId' => $user->id,
-                    'userType' => 'admin',
-                ];
+
+                if($user->id==1){
+                    $loginData = [
+                        'name' => $user->name,
+                        'MerchantID' => $request->input('username'),
+                        'userId' => $user->id,
+                        'userType' => 'admin',
+                    ];
+                } else {
+                    $loginData = [
+                        'name' => $user->name,
+                        'MerchantID' => $request->input('username'),
+                        'userId' => $user->id,
+                        'userType' => 'procurement',
+                    ];
+                }
                 Session::put('loginData', $loginData);
 
                 Carts::truncate();

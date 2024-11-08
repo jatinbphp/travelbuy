@@ -28,6 +28,46 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Jesse',
+            'email' => 'jesse@travelbuy.com',
+            'password' => bcrypt('jesse@123'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Fran',
+            'email' => 'fran@travelbuy.com',
+            'password' => bcrypt('fran@1234'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Tshego',
+            'email' => 'tshego@travelbuy.com',
+            'password' => bcrypt('tshego@12345'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Jaylen',
+            'email' => 'jaylen@travelbuy.com',
+            'password' => bcrypt('jaylen@12346'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Zubair',
+            'email' => 'zubair@travelbuy.com',
+            'password' => bcrypt('zubair@12347'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**

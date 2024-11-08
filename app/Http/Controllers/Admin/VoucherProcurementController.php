@@ -14,6 +14,13 @@ use App\Rules\CommaSeparatedPhoneNumbers;
 class VoucherProcurementController extends Controller
 {
     public function create(){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'admin'])) {
+            return redirect()->route('errors.404');
+        }
+        
         $data['menu'] = "Voucher Procurement";
         $data['productData'] = Products::select('name', 'nappy_code')->where('status','active')->first();
         return view('admin.voucher-procurement.create',$data);
@@ -30,7 +37,7 @@ class VoucherProcurementController extends Controller
     public function store(Request $request){    
 
         $request->validate([
-            'merchantID.*' => 'required',
+            'merchantId.*' => 'required',
             'pluCode.*' => 'required',
             'quantity.*' => 'required',
             'voucherAmount.*' => 'required',
@@ -67,7 +74,7 @@ class VoucherProcurementController extends Controller
             'additionalData.*.country_code' => 'required',
             'additionalData.*.postal_code' => 'required',
         ], [
-            'merchantID.*.required' => 'Merchant ID is required.',
+            'merchantId.*.required' => 'Merchant ID is required.',
             'pluCode.*.required' => 'PLU Code is required.',
             'quantity.*.required' => 'Quantity is required.',
             'voucherAmount.*.required' => 'Voucher Amount is required.',

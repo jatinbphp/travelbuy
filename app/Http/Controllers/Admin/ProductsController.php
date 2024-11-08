@@ -10,6 +10,7 @@ use DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Session;
 
 class ProductsController extends Controller
 {
@@ -18,6 +19,12 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $data['menu'] = 'Products';
 
         if($request->ajax()){
@@ -46,20 +53,26 @@ class ProductsController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
+    public function create(){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $data['menu'] = 'Products';
         return view('admin.products.create',$data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ProductRequest $request)
-    {
+    public function store(ProductRequest $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $input = $request->all();
         if ($file = $request->file('image')) {
             $imageName = Str::random(20) . '.' . $file->getClientOriginalExtension();    
@@ -78,30 +91,39 @@ class ProductsController extends Controller
         return redirect()->route('products.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
+    public function show(string $id){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $data['menu'] = 'Products';
         return view('admin.products.edit',$data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
+    public function edit(string $id){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $data['menu'] = 'Products';
         $data['product'] = Products::findOrFail($id);
         return view('admin.products.edit',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ProductRequest $request, string $id)
-    {
+    public function update(ProductRequest $request, string $id){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $input = $request->all();
         $product = Products::findOrFail($id);
 
@@ -129,11 +151,14 @@ class ProductsController extends Controller
         return redirect()->route('products.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['user', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+        
         $product = Products::findOrFail($id);
         $isInCart = Carts::where('product_id', $id)->first();
         

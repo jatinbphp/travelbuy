@@ -137,12 +137,12 @@ class CouponController extends Controller
             return response()->json(['type' => 'error', 'message' => 'Cart or product data not found.'], 200);
         }
 
+        // Retrieve payment details
         $dataToSend = [
             'userReference' => $userId,
             'id' => ''
         ];
-
-        // Retrieve payment details
+        
         $retrieveApiResponse = $this->curlRequest(env('PAYMENT_RETRIEVE_URL'), 'POST', $dataToSend);
         if (!$retrieveApiResponse) {
             return response()->json(['type' => 'error', 'message' => 'Error retrieving payment data.'], 200);
@@ -153,15 +153,57 @@ class CouponController extends Controller
             return response()->json(['type' => 'error', 'message' => $retrieveResponse->errorMessage ?? 'Unknown error.'], 200);
         }
 
-        $dataToSend = [
+        // Retrieve vocuher details
+        return $dataToSendR = [
+            'userReference' => $userId,
+            'MerchantID' => $retrieveResponse->data->cardAcceptorIdCode,
+            'TerminalID' => $retrieveResponse->data->cardAcceptorTerminalId,
+            'RetrievalReference' => $retrieveResponse->data->retrievalReferenceNumber,
+            'VoucherNumber' => $request->coupon,
+        ];
+
+        $retrieveApiResponseR = $this->curlRequest(env('RETRIEVE_VOUCHER_Add_URL'), 'POST', $dataToSendR);
+        if (!$retrieveApiResponseR) {
+            return response()->json(['type' => 'error', 'message' => 'Error retrieving voucher data.'], 200);
+        }
+
+        $retrieveResponseR = json_decode($retrieveApiResponseR);
+        if ($retrieveResponseR->responseCode != 0 || empty($retrieveResponseR->data)) {
+            return response()->json(['type' => 'error', 'message' => $retrieveResponseR->errorMessage ?? 'Unknown error.'], 200);
+        }
+
+        return $retrieveResponseR = json_decode($retrieveApiResponseR, true);
+
+        $accountType = isset($response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['accountType']) ? $response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['accountType'] : '00';
+        $currencyCode = isset($response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['currencyCode']) ? $response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['currencyCode'] : 710;
+        $notificationType = isset($retrieveResponseR['result']['additionalData']['NOTIFY']['notificationType']) ? $retrieveResponseR['result']['additionalData']['NOTIFY']['notificationType'] : 'MAIL';
+        $notificationAddress = isset($retrieveResponseR['result']['additionalData']['NOTIFY']['notificationAddress']) ? $retrieveResponseR['result']['additionalData']['NOTIFY']['notificationAddress'] : '';
+
+        $medicalKey = '';
+        $medicalValue = '';
+
+        if(isset($retrieveResponseR['result']['additionalData']['undefined'])){
+            $additionalDataValues = $retrieveResponseR['result']['additionalData']['undefined'];
+            $medicalKey = $additionalDataValues[1];
+            $medicalValue = $additionalDataValues[2];
+        }
+
+        return $dataToSend = [
             'userReference' => $userId,
             'RetrievalReference' => $retrieveResponse->data->retrievalReferenceNumber,
             'MerchantID' => $retrieveResponse->data->cardAcceptorIdCode,
-            'TerminalID' => $retrieveResponse->data->cardAcceptorTerminalId,
-            'AccountType' => '00',
+            'TerminalID' => isset($retrieveResponse->data->cardAcceptorTerminalId) ? $retrieveResponse->data->cardAcceptorTerminalId : '',
+            'TransactionType' => '00',
+            'AccountType' => $accountType,
             'VoucherNumber' => $request->coupon,
-            'CurrencyCode' => 710,
+            'CurrencyCode' => $currencyCode,
+            'VoucherVerificationCode' => 8505,
+            'TransactionAmount' => ($request->grandtotal*100),
+            'NotificationType' => ($notificationType=='SMS') ? '02' : '01',
+            'NotificationAddress' => $notificationAddress,
+            'AdditionalData' => $medicalKey.":".$medicalValue
         ];
+
 
         // Add coupon
         $addApiResponse = $this->curlRequest(env('PAYMENT_Add_URL'), 'POST', $dataToSend);

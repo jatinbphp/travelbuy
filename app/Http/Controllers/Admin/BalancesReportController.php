@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Session;
 class BalancesReportController extends Controller
 {
     public function index(Request $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['admin', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+        
         $data['menu'] = 'Balances Report';
 
         // Check if the request is AJAX

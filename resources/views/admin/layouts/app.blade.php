@@ -97,7 +97,7 @@
                                         </p>
                                     </a>
                                 </li>
-                            @else
+                            @elseif(Session::get('loginData')['userType']=='procurement')
 
                                 <li class="nav-item">
                                     <a href="{{route('voucher-procurement.create')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Voucher Procurement'])) active @endif">
@@ -107,16 +107,7 @@
                                         </p>
                                     </a>
                                 </li>
-
-                                <!-- <li class="nav-item">
-                                    <a href="{{route('upload-csv.create')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Upload CSV'])) active @endif">
-                                        <i class="nav-icon fa fa-upload"></i>
-                                        <p>
-                                            Upload CSV
-                                        </p>
-                                    </a>
-                                </li> -->
-
+                            @else
                                 <li class="nav-item">
                                     <a href="{{route('productList.index')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Shop Now','Cart'])) active @endif">
                                         <i class="nav-icon fa fa-shopping-cart"></i>
@@ -138,7 +129,7 @@
                                         <i class="nav-icon fas fa-list"></i>
                                         <p>
                                             Reports
-                                            <i class="right fas fa-angle-left"></i>
+                                            <i class="right fas fa-angle-right"></i>
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
@@ -201,7 +192,7 @@
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2024-2025 <a href="https://adminlte.io">{{ config('app.name', 'Merchant Portal') }}</a>.</strong>
+                <strong>Copyright &copy; {{date('Y')}} <a href="javascript:void(0)">{{ config('app.name', 'TravelBuy') }}</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block"><b>Version</b> 3.2.0</div>
             </footer>

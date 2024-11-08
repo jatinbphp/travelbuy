@@ -3,8 +3,8 @@ $(function () {
     var account_table = $('#accountTable').DataTable({
         processing: true,
         serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        pageLength: 50,
+        lengthMenu: [ 50, 100, 150, 200, 250, ],
         ajax: $("#route_name").val(),
         columns: [
             {data: 'RowID', key: 'RowID'},
@@ -26,8 +26,8 @@ $(function () {
     var account_transactions_table = $('#accountTransactionsTable').DataTable({
         processing: true,
         serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        pageLength: 50,
+        lengthMenu: [ 50, 100, 150, 200, 250, ],
         ajax: $("#route_name").val(),
         columns: [
             {data: 'TransactionTypeDescription', name: 'TransactionTypeDescription'},
@@ -76,8 +76,8 @@ $(function () {
     var balance_table = $('#balanceTable').DataTable({
         processing: true,
         serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        pageLength: 50,
+        lengthMenu: [ 50, 100, 150, 200, 250, ],
         ajax: $("#route_name").val(),
         columns: [
             {data: 'RowID', "width": "15%", RowID: 'RowID'},
@@ -94,8 +94,8 @@ $(function () {
     var terminals_online_table = $('#terminalsOnlineTable').DataTable({
         processing: true,
         serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        pageLength: 50,
+        lengthMenu: [ 50, 100, 150, 200, 250, ],
         ajax: $("#route_name").val(),
         columns: [
             {data: 'RowID', key: 'RowID'},
@@ -117,8 +117,8 @@ $(function () {
     var terminals_transactions_table = $('#terminalsTransactionsTable').DataTable({
         processing: true,
         serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        pageLength: 50,
+        lengthMenu: [ 50, 100, 150, 200, 250, ],
         ajax: $("#route_name").val(),
         columns: [
             {data: 'transactionTypeDescription', key: 'transactionTypeDescription'},
@@ -200,8 +200,8 @@ $(function () {
     var products_table = $('#productsTable').DataTable({
         processing: true,
         serverSide: true, 
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        pageLength: 50,
+        lengthMenu: [ 50, 100, 150, 200, 250, ],
         ajax: $("#route_name").val(),
         columns: [
             {data: 'name', name: 'name'},

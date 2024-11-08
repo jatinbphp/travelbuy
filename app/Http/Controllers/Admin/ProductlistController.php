@@ -11,8 +11,14 @@ use Session;
 
 class ProductlistController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['admin', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $data['menu'] = 'Shop Now';
 
         $data['productsList'] = Products::where('status','active')->get();
@@ -20,8 +26,14 @@ class ProductlistController extends Controller
         return view('admin.productList.index',$data);
     }
 
-    public function addToCart(Request $request)
-    {
+    public function addToCart(Request $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['admin', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+
         $input = $request->all();
         $MerchantID = Session::get('loginData.MerchantID');
         $productId = $input['product_id'];        
@@ -44,8 +56,14 @@ class ProductlistController extends Controller
         return response()->json(['success' => 'Product added to cart successfully!'], 200);    
     }    
 
-    public function updateQty(Request $request)
-    {
+    public function updateQty(Request $request){
+
+        $loginData = Session::get('loginData');
+
+        if ($loginData && in_array($loginData['userType'], ['admin', 'procurement'])) {
+            return redirect()->route('errors.404');
+        }
+        
         $input = $request->all();
         $cart = Carts::find($input['id']);
 
