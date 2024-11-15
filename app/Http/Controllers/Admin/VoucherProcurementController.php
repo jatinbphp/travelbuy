@@ -48,9 +48,9 @@ class VoucherProcurementController extends Controller
                     $index = explode('.', $attribute)[1]; // Get the index of the current item
                     $method = $request->input("notificationMethod.$index");
 
-                    if ($method == '01') {
+                    if ($method == '03') {
                         return (new CommaSeparatedEmails)->passes($attribute, $value) ?: $fail('Invalid email addresses.');
-                    } elseif ($method == '02') {
+                    } elseif ($method == '01') {
                         return (new CommaSeparatedPhoneNumbers)->passes($attribute, $value) ?: $fail('Invalid phone numbers.');
                     }
                 }
@@ -135,10 +135,10 @@ class VoucherProcurementController extends Controller
                 '',
                 $pluCodes[$index] ?? '',
                 $quantities[$index] ?? '',
-                $voucherAmounts[$index] ?? '',
+                ($voucherAmounts[$index] ?? 0) * 100,
                 $notificationMethods[$index] ?? '',
                 $notificationAddresses[$index] ?? '',
-                'MEDICAL;'
+                'MEDICAL:'
             ];
 
             $patientData = [
@@ -169,6 +169,9 @@ class VoucherProcurementController extends Controller
                 $additionalData[$index]['CPT4'] ?? '',
                 str_replace(" ", "", $additionalData[$index]['molecule']) ?? '',
                 ($additionalData[$index]['nappi_code'] ?? '') . '|' . ($additionalData[$index]['dosage'] ?? ''),
+            ];
+
+            $addressData = [
                 $additionalData[$index]['address_1'] ?? '',
                 $additionalData[$index]['address_2'] ?? '',
                 $additionalData[$index]['suburb'] ?? '',
@@ -176,10 +179,11 @@ class VoucherProcurementController extends Controller
                 $additionalData[$index]['region'] ?? '',
                 $additionalData[$index]['country_code'] ?? '',
                 $additionalData[$index]['postal_code'] ?? '',
-                $additionalData[$index]['pharmacy_name'] ?? '',
             ];
+
+            $pharmacy_name = $additionalData[$index]['pharmacy_name'] ?? '';
             
-            $csvLine = implode("|", $voucherData).''.implode(";", $oncolData)."\r\n";
+            $csvLine = implode("|", $voucherData).''.implode(";", $oncolData).';'.implode(",", $addressData).';'.$pharmacy_name."\r\n";
             fwrite($csvFile, $csvLine);
         }
 

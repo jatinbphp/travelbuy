@@ -64,7 +64,7 @@
                                                 <div class="col-md-3 mb-3">
                                                     @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-                                                    {!! Form::select('notificationMethod[' .$index .']', ['01' => 'Email', '02' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
+                                                    {!! Form::select('notificationMethod[' .$index .']', ['03' => 'Email', '01' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
 
                                                     @error("notificationMethod.{$index}")
                                                         <span class="text-danger"><strong>{{ $message }}</strong></span>
@@ -283,7 +283,7 @@
                                             <div class="col-md-3 mb-3">
                                                 @include('admin.common.label', ['field' => 'notificationMethod', 'labelText' => 'Notification Method', 'isRequired' => true])
 
-                                                {!! Form::select('notificationMethod[0]', ['01' => 'Email', '02' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
+                                                {!! Form::select('notificationMethod[0]', ['03' => 'Email', '01' => 'SMS'], null, ['class' => 'form-control', 'placeholder' => 'Please Select']) !!}
                                             </div>
                                             <div class="col-md-12 mb-3">
                                                 @include('admin.common.label', ['field' => 'notificationAddress', 'labelText' => 'Email Address / Phone Number', 'isRequired' => true])

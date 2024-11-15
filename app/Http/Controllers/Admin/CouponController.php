@@ -199,7 +199,7 @@ class CouponController extends Controller
             'CurrencyCode' => $currencyCode,
             'VoucherVerificationCode' => 8505,
             'TransactionAmount' => ($request->grandtotal*100),
-            'NotificationType' => ($notificationType=='SMS') ? '02' : '01',
+            'NotificationType' => ($notificationType=='SMS') ? '01' : '03',
             'NotificationAddress' => $notificationAddress,
             'AdditionalData' => $medicalKey.":".$medicalValue
         ];
