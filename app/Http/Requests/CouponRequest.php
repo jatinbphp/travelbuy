@@ -22,9 +22,18 @@ class CouponRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'coupon' => 'required'            
+            'coupon' => 'required',
+            'verification_code' => 'required'
         ];
 
         return $rules;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'coupon.required' => 'The  voucher code is required.',
+            'verification_code.required' => 'The  voucher verification code is required.',
+        ];
     }
 }

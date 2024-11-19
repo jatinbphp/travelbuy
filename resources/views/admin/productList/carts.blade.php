@@ -63,14 +63,19 @@
                             <h4 class="accordion-title js-accordion-title open">Enter your voucher code here</h4>
                             <div class="accordion-content">
                                 {!! Form::open(['id' => 'couponForm', 'class' => 'form-horizontal', 'files' => true]) !!}
+                                <input type="hidden" name="grandtotal" id="grandtotal" class="form-control">
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <input type="text" name="coupon" placeholder="Enter your voucher code here" id="coupon" class="form-control">
+                                        <div class="coupon-error"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" name="verification_code" placeholder="Enter your voucher verification code here" id="verification_code" class="form-control">
+                                        <div class="verification_code-error"></div>
                                     </div>
                                     <div class="col-md-4">
                                         <button type="button" id="apply-coupon" class="btn btn-primary" data-url="{{ route('productList.apply-coupon') }}">Apply Voucher and Complete Order</button>
                                     </div>
-                                    <div class="col-md-12 coupon-error"></div>
                                 </div>
                                 {!! Form::close() !!}
                             </div>
@@ -127,9 +132,18 @@ $(document).ready(function() {
                 //if (xhr.status === 422) { 
                     var errors = xhr.responseJSON.errors;
                     $.each(errors, function(key, value) {
-                        $('.coupon-error').append(`
-                            <span class="text-danger"><strong>${value}</strong></span>
-                        `);
+
+                        if(key=='coupon'){
+                            $('.coupon-error').append(`
+                                <span class="text-danger"><strong>${value}</strong></span>
+                            `);
+                        }
+
+                        if(key=='verification_code'){
+                            $('.verification_code-error').append(`
+                                <span class="text-danger"><strong>${value}</strong></span>
+                            `);
+                        }
                     });
                 //}
             }
@@ -229,7 +243,7 @@ $(document).ready(function() {
             subTotal += productPrice * qty;
             grandTotal += total;
         });
-
+        $('#grandtotal').val(grandTotal);
         $('#sub_total').text(currency + grandTotal.toFixed(2));
         $('#grand_total').text(currency + grandTotal.toFixed(2));
     }

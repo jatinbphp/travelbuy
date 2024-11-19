@@ -28,12 +28,12 @@ class CouponController extends Controller
             return response()->json(['type' => 'error', 'message' => 'Cart or product data not found.'], 200);
         }
 
+        // Retrieve payment details
         $dataToSend = [
             'userReference' => $userId,
             'id' => ''
         ];
-
-        // Retrieve payment details
+        
         $retrieveApiResponse = $this->curlRequest(env('PAYMENT_RETRIEVE_URL'), 'POST', $dataToSend);
         if (!$retrieveApiResponse) {
             return response()->json(['type' => 'error', 'message' => 'Error retrieving payment data.'], 200);
@@ -45,7 +45,7 @@ class CouponController extends Controller
         }
 
         // Retrieve vocuher details
-        $dataToSendR = [
+        return $dataToSendR = [
             'userReference' => $userId,
             'MerchantID' => $retrieveResponse->data->cardAcceptorIdCode,
             'TerminalID' => $retrieveResponse->data->cardAcceptorTerminalId,
@@ -63,7 +63,7 @@ class CouponController extends Controller
             return response()->json(['type' => 'error', 'message' => $retrieveResponseR->errorMessage ?? 'Unknown error.'], 200);
         }
 
-        $retrieveResponseR = json_decode($retrieveApiResponseR, true);
+        return $retrieveResponseR = json_decode($retrieveApiResponseR, true);
 
         $accountType = isset($response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['accountType']) ? $response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['accountType'] : '00';
         $currencyCode = isset($response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['currencyCode']) ? $response['result']['additionalData']['ADAMTS']['additionalAmountItems']['additionalAmountItem'][0]['currencyCode'] : 710;
@@ -79,11 +79,11 @@ class CouponController extends Controller
             $medicalValue = $additionalDataValues[2];
         }
 
-        $dataToSend = [
+        return $dataToSend = [
             'userReference' => $userId,
             'RetrievalReference' => $retrieveResponse->data->retrievalReferenceNumber,
             'MerchantID' => $retrieveResponse->data->cardAcceptorIdCode,
-            'TerminalID' => $retrieveResponse->data->cardAcceptorTerminalId,
+            'TerminalID' => isset($retrieveResponse->data->cardAcceptorTerminalId) ? $retrieveResponse->data->cardAcceptorTerminalId : '',
             'TransactionType' => '00',
             'AccountType' => $accountType,
             'VoucherNumber' => $request->coupon,
@@ -95,13 +95,14 @@ class CouponController extends Controller
             'AdditionalData' => $medicalKey.":".$medicalValue
         ];
 
+
         // Add coupon
         $addApiResponse = $this->curlRequest(env('PAYMENT_Add_URL'), 'POST', $dataToSend);
         if (!$addApiResponse) {
             return response()->json(['type' => 'error', 'message' => 'Error adding voucher'], 200);
         }
 
-        return $addResponse = json_decode($addApiResponse);
+        $addResponse = json_decode($addApiResponse);
         if ($addResponse->responseCode != 0 || empty($addResponse->data)) {
             return response()->json(['type' => 'error', 'message' => $addResponse->errorMessage ?? 'Unknown error.'], 200);
         }
