@@ -31,7 +31,7 @@ return new class extends Migration
 
         \Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Jesse',
-            'email' => 'jesse@travelbuy.com',
+            'email' => 'jesse@travelbuy.co.za',
             'password' => bcrypt('jesse@123'),
             'created_at' => now(),
             'updated_at' => now(),
@@ -39,7 +39,7 @@ return new class extends Migration
 
         \Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Fran',
-            'email' => 'fran@travelbuy.com',
+            'email' => 'fran@travelbuy.co.za',
             'password' => bcrypt('fran@1234'),
             'created_at' => now(),
             'updated_at' => now(),
@@ -47,7 +47,7 @@ return new class extends Migration
 
         \Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Tshego',
-            'email' => 'tshego@travelbuy.com',
+            'email' => 'tshego@travelbuy.co.za',
             'password' => bcrypt('tshego@12345'),
             'created_at' => now(),
             'updated_at' => now(),
@@ -55,7 +55,7 @@ return new class extends Migration
 
         \Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Jaylen',
-            'email' => 'jaylen@travelbuy.com',
+            'email' => 'jaylen@travelbuy.co.za',
             'password' => bcrypt('jaylen@12346'),
             'created_at' => now(),
             'updated_at' => now(),
@@ -63,8 +63,64 @@ return new class extends Migration
 
         \Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Zubair',
-            'email' => 'zubair@travelbuy.com',
+            'email' => 'zubair@travelbuy.co.za',
             'password' => bcrypt('zubair@12347'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Nyeleti Hlungwani',
+            'email' => 'info@asknow.co.za',
+            'password' => bcrypt('QlluJaOrprdUdbe'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Lindani Dube',
+            'email' => 'lindani@asknow.co.za',
+            'password' => bcrypt('d0y3CX5cYNVumVz'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Comfort Maluleke',
+            'email' => 'comfort@asknow.co.za',
+            'password' => bcrypt('E6nTSAeTTLkjvOu'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Nomsa Mtshali',
+            'email' => 'nomsa@asknow.co.za',
+            'password' => bcrypt('1me9HIQm6ZG9r2J'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Lauren Pretorius',
+            'email' => 'lauren@ias.org.za',
+            'password' => bcrypt('of5c9lX8pfn95p5'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Sibusiso Nkosi',
+            'email' => 'sibusiso@ias.org.za',
+            'password' => bcrypt('M2hVuPoE6pVkzvm'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('users')->insert([
+            'name' => 'Lynda Woods',
+            'email' => 'lynda@ias.org.za',
+            'password' => bcrypt('XZNVYDSOeMlqgLB'),
             'created_at' => now(),
             'updated_at' => now(),
         ]);

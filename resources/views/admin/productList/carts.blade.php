@@ -17,7 +17,8 @@
         .accordion-container .accordion-title:hover,.accordion-container .accordion-title:active,.accordion-title.open{background-color:#ff7602}
         .accordion-container .accordion-title::after{content:"";position:absolute;top:17px;right:15px;width:0;height:0;border:8px solid transparent;border-top-color:#fff}
         .accordion-container .accordion-title.open::after{content:"";position:absolute;top:8px;border:8px solid transparent;border-bottom-color:#fff}
-        .accordion-content{padding-left:1em;padding-top:.5rem;border:1px solid #ff7602}       
+        .accordion-content{padding:1em;border:1px solid #ff7602}       
+        .accordion-container strong{display: block;}
     </style>
     <section class="content">
         @include ('admin.common.error')
@@ -59,8 +60,8 @@
                         <hr>
                         <h5>What would you like to do next?</h5>
                         <p>Enter if you have a discount code you want to use.</p>
-                        <div id="accordion" class="accordion-container">
-                            <h4 class="accordion-title js-accordion-title open">Enter your voucher code here</h4>
+                        <div class="accordion-container">
+                            <h4 class="accordion-title">Enter your voucher code here</h4>
                             <div class="accordion-content">
                                 {!! Form::open(['id' => 'couponForm', 'class' => 'form-horizontal', 'files' => true]) !!}
                                 <input type="hidden" name="grandtotal" id="grandtotal" class="form-control">
@@ -80,6 +81,64 @@
                                 {!! Form::close() !!}
                             </div>
                         </div>
+
+                        <div class="accordion-container mt-3" style="display:none;" id="patient-details">
+                            <h4 class="accordion-title">Patient Details :</h4>
+                            <div class="accordion-content">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Merchant ID :</strong> IAS423817281777</td>
+                                            <td><strong>PLU Code :</strong> 2/hv/hvoucher</td>
+                                            <td><strong>Quantity :</strong> 10</td>
+                                            <td><strong>Voucher Amount :</strong> R10000</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Notification Method :</strong> Email</td>
+                                            <td><strong>Email Address / Phone Number :</strong> vijay.g.php@gmail.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"><strong>Additional Data :</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Molecule :</strong> Xtandi40mgTablets</td>
+                                            <td><strong>Nappi Code :</strong> 721978001</td>
+                                            <td><strong>Dosage :</strong> 53mg</td>
+                                            <td><strong>Patient Name :</strong> Michael</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Patient Surname :</strong> Bosman</td>
+                                            <td><strong>Patient ID :</strong> 1111111111111</td>
+                                            <td><strong>Patient Medical Scheme Name :</strong> Dental</td>
+                                            <td><strong>Patient Medical Scheme Membership Number :</strong> 01101010102</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Pharmacy Name (service point) :</strong> M-KEM 24 HOUR PHARMACY</td>
+                                            <td><strong>ICD10 (Medical Classification) :</strong> ICD10</td>
+                                            <td><strong>CPT4 (Medical Service/Procedures) :</strong> CPT4</td>
+                                            <td colspan="1"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"><strong>Delivery Address :</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Address 1 :</strong> Street Av</td>
+                                            <td><strong>Address 2 :</strong> Century City</td>
+                                            <td><strong>Suburb :</strong> Milerton</td>
+                                            <td><strong>City :</strong> Cape Town</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Region :</strong> Western Cape</td>
+                                            <td><strong>Country Code :</strong> ZA</td>
+                                            <td><strong>Postal Code :</strong> 7550</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
