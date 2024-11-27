@@ -115,7 +115,7 @@ class CouponController extends Controller
                 'VoucherNumber' => $request->coupon,
                 'CurrencyCode' => $currencyCode,
                 'VoucherVerificationCode' => $request->verification_code,
-                'TransactionAmount' => ($request->grandtotal*1),
+                'TransactionAmount' => ($request->grandtotal*100),
                 'NotificationType' => ($notificationType=='SMS') ? '01' : '03',
                 'NotificationAddress' => $notificationAddress,
                 'AdditionalData' => $medicalKey.":".$medicalValue
