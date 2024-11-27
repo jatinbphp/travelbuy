@@ -71,6 +71,7 @@ Route::middleware(['user','removePublic', 'admin'])->group(function () {
 
     // Apply-coupon
     Route::post('apply-coupon',[CouponController::class, 'applyCoupon'])->name('productList.apply-coupon');
+    Route::post('apply-payment',[CouponController::class, 'applyCouponPayment'])->name('productList.apply-payment');
 
     /*404 Page*/
     Route::get('404', [CommonController::class, 'page_not_found'])->name('errors.404');

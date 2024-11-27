@@ -12,7 +12,7 @@
     ])
     <style type="text/css">
         .dataTables_length,#ProductCartTable_filter,.dataTables_info,.dataTables_paginate{display:none}
-        #accordion{margin-bottom:20px;margin-top:1rem}
+        #accordion{margin-top:1rem}
         .accordion-container .accordion-title{position:relative;margin:0;padding:.625em .625em .625em 1em;background-color:#ff7602;font-size:1em;font-weight:400;color:#fff;cursor:pointer}
         .accordion-container .accordion-title:hover,.accordion-container .accordion-title:active,.accordion-title.open{background-color:#ff7602}
         .accordion-container .accordion-title::after{content:"";position:absolute;top:17px;right:15px;width:0;height:0;border:8px solid transparent;border-top-color:#fff}
@@ -20,7 +20,7 @@
         .accordion-content{padding:1em;border:1px solid #ff7602}       
         .accordion-container strong{display: block;}
     </style>
-    <section class="content">
+    <section class="content" id="cart-page">
         @include ('admin.common.error')
         <div class="row">
             <div class="col-12">
@@ -60,8 +60,8 @@
                         <hr>
                         <h5>What would you like to do next?</h5>
                         <p>Enter if you have a discount code you want to use.</p>
-                        <div class="accordion-container">
-                            <h4 class="accordion-title">Enter your voucher code here</h4>
+                        <div id="accordion" class="accordion-container">
+                            <h4 class="accordion-title js-accordion-title open">Enter your voucher code here</h4>
                             <div class="accordion-content">
                                 {!! Form::open(['id' => 'couponForm', 'class' => 'form-horizontal', 'files' => true]) !!}
                                 <input type="hidden" name="grandtotal" id="grandtotal" class="form-control">
@@ -75,70 +75,18 @@
                                         <div class="verification_code-error"></div>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" id="apply-coupon" class="btn btn-primary" data-url="{{ route('productList.apply-coupon') }}">Apply Voucher and Complete Order</button>
+                                        <button type="button" class="btn btn-primary apply-coupon" data-url="{{ route('productList.apply-coupon') }}">Apply Voucher & View Patient Details</button>
                                     </div>
                                 </div>
                                 {!! Form::close() !!}
                             </div>
                         </div>
 
-                        <div class="accordion-container mt-3" style="display:none;" id="patient-details">
-                            <h4 class="accordion-title">Patient Details :</h4>
-                            <div class="accordion-content">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Merchant ID :</strong> IAS423817281777</td>
-                                            <td><strong>PLU Code :</strong> 2/hv/hvoucher</td>
-                                            <td><strong>Quantity :</strong> 10</td>
-                                            <td><strong>Voucher Amount :</strong> R10000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Notification Method :</strong> Email</td>
-                                            <td><strong>Email Address / Phone Number :</strong> vijay.g.php@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4"><strong>Additional Data :</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Molecule :</strong> Xtandi40mgTablets</td>
-                                            <td><strong>Nappi Code :</strong> 721978001</td>
-                                            <td><strong>Dosage :</strong> 53mg</td>
-                                            <td><strong>Patient Name :</strong> Michael</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Patient Surname :</strong> Bosman</td>
-                                            <td><strong>Patient ID :</strong> 1111111111111</td>
-                                            <td><strong>Patient Medical Scheme Name :</strong> Dental</td>
-                                            <td><strong>Patient Medical Scheme Membership Number :</strong> 01101010102</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Pharmacy Name (service point) :</strong> M-KEM 24 HOUR PHARMACY</td>
-                                            <td><strong>ICD10 (Medical Classification) :</strong> ICD10</td>
-                                            <td><strong>CPT4 (Medical Service/Procedures) :</strong> CPT4</td>
-                                            <td colspan="1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4"><strong>Delivery Address :</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Address 1 :</strong> Street Av</td>
-                                            <td><strong>Address 2 :</strong> Century City</td>
-                                            <td><strong>Suburb :</strong> Milerton</td>
-                                            <td><strong>City :</strong> Cape Town</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Region :</strong> Western Cape</td>
-                                            <td><strong>Country Code :</strong> ZA</td>
-                                            <td><strong>Postal Code :</strong> 7550</td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
+                        <div id="accordion1" class="accordion-container" style="border-top: 1px solid #000;">
+                            <h4 class="accordion-title js-accordion-title">Patient Details :</h4>
+                            <div class="accordion-content" id="patient-details" style="display:none;">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -157,10 +105,10 @@ $(function () {
 });
 
 $(document).ready(function() {
-    $('#apply-coupon').click(function(event) {
+    $('#cart-page').on('click', '.apply-coupon', function (event) {
         event.preventDefault();
-
         $('#loader').removeClass('d-none');
+        $('#patient-details').html('');
 
         $('.text-danger').remove();
         var url = $(this).data('url');
@@ -171,16 +119,23 @@ $(document).ready(function() {
             type: 'POST',
             data: formData, 
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             },
             success: function(response) {
                 $('#loader').addClass('d-none');
                 if (response.type === 'success') {
-                    swal("Success!", response.message, "success");
+                    $('#accordion .js-accordion-title').removeClass('open');
+                    $('#accordion .accordion-content').css('display', 'none');
+                    $('#accordion1 .js-accordion-title').addClass('open');
+                    $('#coupon').val('');
+                    $('#verification_code').val('');
+                    $('#patient-details').html(response.data);
+                    $('#alert-success').text(response.message);
+                    $('#patient-details').css('display', 'block');
 
-                    setTimeout(function() {
-                        window.location.href = "{{ route('productList.index') }}";
-                    }, 2000); 
+                    $('html, body').animate({
+                        scrollTop: $('#alert-success').offset().top
+                    }, 1000); 
 
                 } else if (response.type === 'error') {
                     swal("Warning!", response.message, "error");
@@ -203,6 +158,47 @@ $(document).ready(function() {
                                 <span class="text-danger"><strong>${value}</strong></span>
                             `);
                         }
+                    });
+                //}
+            }
+        });
+    });
+
+    $('#cart-page').on('click', '.apply-coupon-payment', function (event) {
+        event.preventDefault();        
+        $('#loader').removeClass('d-none');
+
+        $('.text-danger').remove();
+        var url = $(this).data('url');
+        var formData = $('#cart-page #couponPaymentForm').serializeArray();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData, 
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            success: function(response) {
+                $('#loader').addClass('d-none');
+                if (response.type === 'success') {
+                    swal("Success!", response.message, "success");
+                    setTimeout(function() {
+                        window.location.href = "{{ route('productList.index') }}";
+                    }, 2000); 
+                } else if (response.type === 'error') {
+                    swal("Warning!", response.message, "error");
+                }
+            },
+            error: function(xhr) {
+                $('#loader').addClass('d-none');
+                //if (xhr.status === 422) { 
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+
+                        $('.payment-error').append(`
+                            <span class="text-danger"><strong>Something went wrong. please try again.</strong></span>
+                        `);
                     });
                 //}
             }
