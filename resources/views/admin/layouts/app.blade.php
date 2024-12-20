@@ -41,7 +41,7 @@
                         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{route('user.dashboard')}}" class="nav-link">Dashborad</a>
+                        <a href="{{route('user.dashboard')}}" class="nav-link">Dashboard</a>
                     </li>
                 </ul>
 
@@ -109,10 +109,10 @@
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a href="{{route('productList.index')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Shop Now','Cart'])) active @endif">
+                                    <a href="{{route('productList.index')}}" class="nav-link @if(isset($menu) && in_array($menu, ['Redeem Voucher','Cart'])) active @endif">
                                         <i class="nav-icon fa fa-shopping-cart"></i>
                                         <p>
-                                            Shop Now
+                                            Redeem Voucher
                                         </p>
                                     </a>
                                 </li>

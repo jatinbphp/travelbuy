@@ -42,7 +42,7 @@ class CouponController extends Controller
 
         $retrieveResponse = json_decode($retrieveApiResponse);
         if ($retrieveResponse->responseCode != 0 || empty($retrieveResponse->data)) {
-            return response()->json(['type' => 'error', 'message' => $retrieveResponse->errorMessage ?? 'Unknown error222.'], 200);
+            return response()->json(['type' => 'error', 'message' => $retrieveResponse->errorMessage ?? 'Unknown error.'], 200);
         }
 
         // Retrieve vocuher Add
@@ -61,7 +61,7 @@ class CouponController extends Controller
 
         $retrieveResponseR = json_decode($retrieveApiResponseR);
         if ($retrieveResponseR->responseCode != 0 || empty($retrieveResponseR->data)) {
-            return response()->json(['type' => 'error', 'message' => $retrieveResponseR->errorMessage ?? 'Unknown error11.'], 200);
+            return response()->json(['type' => 'error', 'message' => $retrieveResponseR->errorMessage ?? 'Unknown error.'], 200);
         }
 
         // Add coupon
@@ -125,7 +125,7 @@ class CouponController extends Controller
                 'Merchant_ID' => $retrieveResponse->data->cardAcceptorIdCode ?? '',
                 'PLU_Code' => '2/hv/hvoucher',
                 'Quantity' => 1,
-                'Voucher_Amount' => isset($request->grandtotal) ? ($request->grandtotal * 100) : 0,
+                'Voucher_Amount' => $TransactionAmount,
                 'Notification_Method' => $notificationType ?? '',
                 'Email_Address_Or_Phone_Number' => $notificationAddress ?? '',
                 'Molecule' => isset($mainArray[7]) && !empty($mainArray[7]) ? $mainArray[7] : '',

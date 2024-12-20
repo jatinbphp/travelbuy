@@ -16,7 +16,7 @@
             <td><strong>Merchant ID :</strong> {{$Merchant_ID}}</td>
             <td><strong>PLU Code :</strong> {{$PLU_Code}}</td>
             <td><strong>Quantity :</strong> {{$Quantity}}</td>
-            <td><strong>Voucher Amount :</strong> R {{$Voucher_Amount}}</td>
+            <td><strong>Voucher Amount :</strong> R {{number_format($Voucher_Amount / 100, 2, '.', '')}}</td>
         </tr>
         <tr>
             <td><strong>Notification Method :</strong> {{$Notification_Method}}</td>

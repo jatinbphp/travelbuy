@@ -19,7 +19,7 @@ class ProductlistController extends Controller
             return redirect()->route('errors.404');
         }
 
-        $data['menu'] = 'Shop Now';
+        $data['menu'] = 'Redeem Voucher';
 
         $data['productsList'] = Products::where('status','active')->get();
         

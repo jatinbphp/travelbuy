@@ -6,7 +6,7 @@
         'menu' => $menu,
         'breadcrumb' => [
             ['route' => route('user.dashboard'), 'title' => 'Dashboard'],
-            ['route' => route('productList.index'), 'title' => 'Shop Now']
+            ['route' => route('productList.index'), 'title' => 'Redeem Voucher']
         ],
         'active' => $menu
     ])
@@ -59,7 +59,7 @@
                         </table> 
                         <hr>
                         <h5>What would you like to do next?</h5>
-                        <p>Enter if you have a discount code you want to use.</p>
+                        <p>Please enter the voucher details you received from the patient to redeem this voucher.</p>
                         <div id="accordion" class="accordion-container">
                             <h4 class="accordion-title js-accordion-title open">Enter your voucher code here</h4>
                             <div class="accordion-content">

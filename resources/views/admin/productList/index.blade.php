@@ -17,7 +17,7 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        <h3 class="card-title">{{ 'Manage ' . $menu }}</h3>
+                        <h3 class="card-title">{{ 'Select the Molecule you want with the Co-Pay Amount. ' }}</h3>
                         <div class="row">
                             <div class="col-md-12">
                                 <a href="{{ route('carts.index') }}" class="btn btn-sm btn-info float-right">
