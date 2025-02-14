@@ -52,6 +52,7 @@ class CouponController extends Controller
             'TerminalID' => $retrieveResponse->data->cardAcceptorTerminalId,
             'RetrievalReference' => $retrieveResponse->data->retrievalReferenceNumber,
             'VoucherNumber' => $request->coupon,
+            'PLU_Code' => '2/hv/hvoucher',
         ];
 
         $retrieveApiResponseR = $this->curlRequest(env('RETRIEVE_VOUCHER_Add_URL'), 'POST', $dataToSendR);
